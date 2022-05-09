@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  nodejs-app:
+    container_name: nodejs-api
+    build: ./nodejs-app/
+    ports:
+      - 4000:3000
+    env_file:
+      - ./nodejs-app/.env
+    volumes:
+      - ./nodejs-app/:/var/nodejs-app/
+
+  postgres:
+    container_name: postgres
+    image: postgres:14.2-alpine
+    ports:
+      - 5432:5432
+    restart: always
+    env_file:
+      - ./nodejs-app/.env
+    environment:
+      - POSTGRES_USER=USER_DB
+      - POSTGRES_PASSWORD=PW_DB
+      - POSTGRES_DB=NAME_DB
